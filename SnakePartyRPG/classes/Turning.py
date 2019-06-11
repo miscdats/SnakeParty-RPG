@@ -3,6 +3,7 @@ import math
 
 
 class TurningSprite(arcade.Sprite):
+    tag = None
     """ Sprite that sets its angle to the direction it is traveling in. """
     def update(self):
         super().update()

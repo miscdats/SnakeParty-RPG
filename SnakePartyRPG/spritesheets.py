@@ -2,6 +2,7 @@ import arcade
 from constants import *
 
 
+
 def read_sprite_list(grid, sprite_list):
     for row in grid:
         for grid_location in row:

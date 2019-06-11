@@ -1,7 +1,7 @@
-from classes import Turning
+from classes.Turning import *
 
 
-class Javelin(Turning):
+class Javelin(TurningSprite):
     """
     Class that represents a javelin.
 
@@ -9,7 +9,7 @@ class Javelin(Turning):
     that aligns to its direction.
     """
 
-    sprite.tag = "javelin"
+    tag = "javelin"
 
     def update(self):
         super().update()

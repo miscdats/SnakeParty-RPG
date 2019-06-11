@@ -1,7 +1,7 @@
 def bin_to_dec(bnum):
     new_num = []
 
-    for j in range(len(bnum)):
+    for j in range(bnum):
         z = int(bnum[j]) * (8 ** (len(bnum) - (j + 1)))
         new_num.append(z)
 

@@ -10,9 +10,11 @@ class Room:
     """
     def __init__(self):
         # Lists for coins, monsters, etc.
+        self.name = None
         self.party_list = None
         self.wall_list = None
         self.enemy_list = None
+        self.javelin_list = None
         self.item_list = None
         self.coin_list = None
         self.background = None
