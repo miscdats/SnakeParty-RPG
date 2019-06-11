@@ -1,4 +1,4 @@
-""" This is the main game / window class. """
+# This is the main game / window class.
 import arcade
 import random
 import timeit
@@ -9,19 +9,66 @@ from constants import *
 from algs import *
 from rooms import *
 from classes import *
+from classes.Party import *
 
 
 class RPGGame(arcade.Window):
     """ Main application class. """
 
+    def _create(self):
+        pass
+
+    def _recreate(self, changes):
+        pass
+
+    def flip(self):
+        pass
+
+    def switch_to(self):
+        pass
+
+    def set_caption(self, caption):
+        pass
+
+    def set_minimum_size(self, width, height):
+        pass
+
+    def set_maximum_size(self, width, height):
+        pass
+
+    def set_location(self, x, y):
+        pass
+
+    def activate(self):
+        pass
+
+    def minimize(self):
+        pass
+
+    def maximize(self):
+        pass
+
+    def set_vsync(self, vsync):
+        pass
+
+    def set_mouse_platform_visible(self, platform_visible=None):
+        pass
+
+    def set_exclusive_mouse(self, exclusive=False):
+        pass
+
+    def set_exclusive_keyboard(self, exclusive=True):
+        pass
+
+    def get_system_mouse_cursor(self, name):
+        pass
+
+    def dispatch_events(self):
+        pass
+
     def __init__(self, screen_width, screen_height, title):
-        """ Constructor """
+        """ Constructor/initializer for RPGGame class. """
         super().__init__(screen_width, screen_height, title)
-
-        # Set working directory
-        file_path = os.path.dirname(os.path.abspath(__file__))
-        os.chdir(file_path)
-
         arcade.set_background_color(arcade.color.ASH_GREY)
 
         # Starts game state in first page of instructions
@@ -32,24 +79,31 @@ class RPGGame(arcade.Window):
         self.player_list = None
         self.room_list = None
         self.grid = None
-        self.current_room = None
+        self.current_room = 0
+        self.party_list = None
+        self.enemy_list = None
+        self.javelin_list = None
 
+        # Looks like nothing so far
         self.view_bottom = 0
         self.view_left = 0
         self.physics_engine = None
         self.processing_time = 0
         self.draw_time = 0
         self.message_queue = None
+        self.rooms = None
+        self.frame_count = 0
 
         # Set up player
+        self.player = None
         self.score = 0
         self.player_sprite = None
 
         # Instructions pages loaded
         self.instructions = []
-        texture = arcade.load_texture("images/instructions_0.png")
+        texture = arcade.load_texture("images/bgs/PNG/Full/Classic/classic1.png")
         self.instructions.append(texture)
-        texture = arcade.load_texture("images/instructions_1.png")
+        texture = arcade.load_texture("images/bgs/PNG/Full/Classic/classic2.png")
         self.instructions.append(texture)
 
     def setup(self):
@@ -57,10 +111,18 @@ class RPGGame(arcade.Window):
         # Sprite lists
         self.player_list = arcade.SpriteList()
         self.item_list = arcade.SpriteList()
+        self.room_list = arcade.SpriteList()
+        self.party_list = arcade.SpriteList()
+        self.enemy_list = arcade.SpriteList()
+        self.javelin_list = arcade.SpriteList()
+
+        # Set up party
+        self.party_list = Party()
 
         # Set up the player
         self.score = 0
-        self.player_sprite = arcade.Sprite("images/character.png", TEAM_SPRITE_SIZE)
+        self.player = Player()
+        self.player_sprite = self.player.sprite
         self.player_sprite.center_x = 50
         self.player_sprite.center_y = 50
         self.player_list.append(self.player_sprite)
@@ -68,7 +130,7 @@ class RPGGame(arcade.Window):
         # Set up the items
         for i in range(50):
             # Create the item instance
-            item = arcade.Sprite("images/item_01.png", TEAM_SPRITE_SCALING / 3)
+            item = arcade.Sprite("images/16x16/Item__67.png", TEAM_SPRITE_SCALING / 3)
 
             # Position the item
             item.center_x = random.randrange(SCREEN_WIDTH)
@@ -79,6 +141,23 @@ class RPGGame(arcade.Window):
 
         # Don't show the mouse cursor
         self.set_mouse_visible(False)
+
+    def on_draw(self):
+        """ Render the screen according to current state. """
+        arcade.start_render()
+
+        if self.current_state == INSTRUCTIONS_PAGE_0:
+            self.draw_instructions_page(0)
+
+        elif self.current_state == INSTRUCTIONS_PAGE_1:
+            self.draw_instructions_page(1)
+
+        elif self.current_state == GAME_RUNNING:
+            self.draw_game()
+
+        else:
+            self.draw_game()
+            self.draw_game_over()
 
     def draw_instructions_page(self, page_number):
         """ Draw and load instruction page as image. """
@@ -108,6 +187,15 @@ class RPGGame(arcade.Window):
         # Start timing how long this takes
         draw_start_time = timeit.default_timer()
 
+        arcade.draw_texture_rectangle(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2,
+                                      SCREEN_WIDTH, SCREEN_HEIGHT, self.rooms[self.current_room].background)
+
+        # Draw all the walls in this room
+        self.rooms[self.current_room].wall_list.draw()
+
+        # If you have coins or monsters, then copy and modify the line
+        # above for each list.
+
         # Draw all the sprites.
         self.player_list.draw()
         self.current_room.wall_list.draw()
@@ -115,7 +203,7 @@ class RPGGame(arcade.Window):
         self.current_room.item_list.draw()
         self.current_room.pewpew_list.draw()
 
-        # Draw inventory
+        # Draw inventory to screen...
         arcade.draw_lrtb_rectangle_filled(self.view_left,
                                           self.view_left + SCREEN_WIDTH - 1,
                                           self.view_bottom + TEAM_SPRITE_SIZE * 2,
@@ -128,7 +216,7 @@ class RPGGame(arcade.Window):
             x_position += item.width
             item.draw()
 
-            # Draw messages
+            # Draw messages in queue
             if len(self.message_queue) > 0:
                 center_x = SCREEN_WIDTH // 2 + self.view_left
                 center_y = SCREEN_HEIGHT // 2 + self.view_bottom
@@ -147,25 +235,9 @@ class RPGGame(arcade.Window):
         output = f"Score: {self.score}"
         arcade.draw_text(output, 10, 20, arcade.color.AMERICAN_ROSE, 14)
 
-    def on_draw(self):
-        """ Render the screen according to current state. """
-        arcade.start_render()
-
-        if self.current_state == INSTRUCTIONS_PAGE_0:
-            self.draw_instructions_page(0)
-
-        elif self.current_state == INSTRUCTIONS_PAGE_1:
-            self.draw_instructions_page(1)
-
-        elif self.current_state == GAME_RUNNING:
-            self.draw_game()
-
-        else:
-            self.draw_game()
-            self.draw_game_over()
-
     def update(self, delta_time):
         """ All movement and game logic. """
+        self.frame_count += 1
 
         if not self.current_state == GAME_RUNNING:
             return
@@ -184,7 +256,7 @@ class RPGGame(arcade.Window):
                 enemy.update()
 
         for enemy in self.current_level.enemy_list:
-            if enemy.tag == "goblin" and random.randrange(100) == 0:
+            if enemy.tag == "imp" and random.randrange(100) == 0:
                 javelin = arcade.Sprite("images/javelin.png", 1)
                 javelin.tag = "javelin"
 
@@ -208,7 +280,7 @@ class RPGGame(arcade.Window):
                 javelin.change_x = math.cos(angle) * JAVELIN_SPEED
                 javelin.change_y = math.sin(angle) * JAVELIN_SPEED
 
-                self.current_level.missile_list.append(javelin)
+                self.current_level.javelin_list.append(javelin)
 
         # Generate a list of all item sprites that player picked up.
         objects_hit_list = arcade.check_for_collision_with_list(self.player_sprite, self.current_level.objects_list)
@@ -225,7 +297,7 @@ class RPGGame(arcade.Window):
 
         # Did javelin hit player?
         sprites_hit = arcade.check_for_collision_with_list(self.player_sprite, self.current_room.javelin_list)
-        if len(sprites_hit) > 25 || self.player.hp < 1:
+        if (len(sprites_hit) > 25) or (self.player.hp < 1):
             self.current_state = GAME_OVER
 
         nearest_sprite, distance = get_closest_sprite(self.player_sprite, self.current_level.enemy_list)
@@ -233,6 +305,17 @@ class RPGGame(arcade.Window):
         if distance < TEAM_SPRITE_SIZE * 2 and nearest_sprite.tag == "cliff":
             self.message_queue.append("Oh look a cliff... HUH WAIT WHAT??? AHHHH!!!")
             self.current_state = GAME_OVER
+
+        if not self.player_sprite.respawning:
+            enemy = arcade.check_for_collision_with_list(self.player_sprite, self.enemy_list)
+            if len(enemy) > 0:
+                if self.lives > 0:
+                    self.lives -= 1
+                    self.player_sprite.respawn()
+                    enemy[0].kill()
+                    self.party_life_list.pop().kill()
+                else:
+                    self.current_state = GAME_OVER
 
         # --- Manage Scrolling ---
         self.scroll()
@@ -316,11 +399,3 @@ class RPGGame(arcade.Window):
                                 self.view_bottom,
                                 SCREEN_HEIGHT + self.view_bottom)
 
-def main():
-    game = RPGGame(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE)
-    game.setup()
-    arcade.run()
-
-
-if __name__ == "__main__":
-    main()

@@ -1,0 +1,275 @@
+AD 315 TERM PROJECT
+
+Due Date: June 11th, 2019 at 11:59 pm  (also, April 25th and May 28th, see details below about 3 part submission)
+
+Purpose: To implement skills learned throughout Discrete Math class by using Python 3.x.
+
+Skills: Python programming language, logic skills, deduction, creativity
+
+Knowledge: Number conversion, prime number, cipher creation, set theory, permutations and combinations, probability, recursive function creation, binary search tree creation and manipulation, finite state machine creation.
+
+Rubric: Located at the end of the document in a table.
+
+Assignment Table of Contents:
+
+Introduction
+
+Term Project Requirements
+
+Helpful Hints
+
+Ideas
+
+Text-based Adventure
+
+Stats
+
+Inventory
+
+Text-based Adventure Term Project Requirements
+
+Online Store
+
+Online Store Term Project Requirements
+
+The final submission
+
+
+
+Task:
+
+We are going to use Classroom Projects to do these. It works a bit differently. They will be listed under Projects in repl.it.
+
+You may pick your own topic for a Term Project, but these requirements must be fulfilled below. I have also offered what I think is the best option for a term project: a text-based adventure game. Below are the 12 requirements, I have outlined my idea for the text-based adventure game. Below that is another idea for an online store which I will outline the requirements translation. I would suggest you start on this early and work on it in parts. Do not just copy your code directly from your homework. Its okay to take something like the template for creating a BST from the homework but not just copy and paste everything. The Rubric for the grade is at the end of these instructions.
+
+There will be 3 submissions for the Term Project. The first will be an outline of what you intend to do by filling out a form and submitting it. The second will be a rough draft you will submit two weeks before the due date (does not have to be complete, just submit what you have completed and I will give you feedback on what to include and or improve) and the final submission. The way grading will work is that for each of the Requirements Outline or Rough Draft that are not submitted AT ALL, -10% will be deducted from the final Term Project grade.
+
+Submission Checklist:
+
+Requirements Outline  (due Thursday, April 25th)
+
+Rough Draft                   (due Tuesday May 28th)
+
+Final Submission          (due Tuesday June 11th)
+
+There is also an opportunity we might pursue to be involved in the Making Learning Visible Symposium on June 6th. This is an opportunity where you could present your work in the Symposium (even a project not completely done can be presented as long as the majority is done) and it will look GREAT on a resume!  More details soon, stay tuned. Here is a link to the Symposium site: http://webshare.northseattle.edu/tlc/forfaculty_makinglearningvisible.shtm
+
+Term Project Requirements:
+
+(1) Number Conversion: some form of binary/octal/hex conversion where the user inputs a number in binary/octal/hex/decimal and it is converted and then that value is used for something.
+
+(2) Prime Numbers or Cipher: some form of use of prime numbers or the creation of a NEW type of cipher we did not go over in class. This cipher would be operational and serve a purpose. The use of prime number would need to be creative and functional.
+
+(3) Set Theory: The project would use sets for data storage of one kind as well as multiple operations on sets including unions, intersections and set difference.
+
+(4) Permutations/Combinations: The project would do a calculation of permutations and/or combinations in several locations for one reason or another. This would be functional and useful.
+
+(5) Probability: The project would use probability in several places to determine something useful, even if it is staged.
+
+(6) Algorithms: The project will use two algorithms. They can be two sorting algorithms such as Bubble Sort, Quick Sort or Binary Sort (others acceptable too) or one of the two can include a greedy algorithm.
+
+(7) Recursion: The project will use a minimum of two recursive functions. This can be combined with the requirements for BSTs or elsewhere.
+
+(8) Trees: The program will use one or more BSTs as a data structure to hold some data that can be retrievable through a search function. It will also be able to delete and add leaves.
+
+(9) Finite State Machines & Graphs: The minimum requirement for graphs is to create a finite state machine using Visio or LucidChart or on paper that shows the progression of your program. See the examples below for details on how this might be done. You can receive extra credit if you do this AND also include a graph in your program as a data structure. (directed or undirected)
+
+(10) Stats: You must have one obstacle, encounter or event that occurs in your dungeon that uses each of the stats scores somehow.
+
+(11) Battles/Puzzles or Purchases/Interactions: You must have at least 3 of a combination of battles or puzzles if you are doing a text adventure or purchases and interactions if you are doing a store. If you are doing your own topic, you will need to let me know how you mean to substitute these. In the text adventure, the battles or puzzles must have a way to win and a way to lose. If the character loses them, they will either die or lose some hit points. If they win, they may receive an item to put in their inventory (into a data structure). If you are doing an online store, the purchase can obviously go through (purchasing through a vendor?) or not for some reason. Be creative!
+
+(12) General: You must have a minimum of 6 "states" for your project to be in. For a text-based adventure this would be minimum of 6 "rooms" or "areas". For an online store, this would be a minimum of 6 possible menus that provide functionality such as purchasing and creating reports.
+
+Extra credit will be awarded for above and beyond the requirements work and creative solutions.
+
+
+
+Helpful Hints:
+
+Before I get into the Ideas section, I want to offer some helpful hints:
+
+(1) You are not required to use object-oriented programming or even to have multiple Python files but you may receive extra points if you do this. But if it is slowing your progress down too much, avoid it. This class isn't about mastering Python.
+
+(2) Repl.it is going to make you angry at some point due to a random, bizarre and unwarranted indentation error. You have a few options. I have found sometimes I have to retype a few lines to get the error to go away where it is located (copying and pasting just keeps the error). Its just frustrating but happens infrequently. If it gets to the point where you cannot tolerate it anymore, you can use PyCharm or a similar Python IDE to create your project and then copy and paste it into repl.it. If it still has the indentation errors after you paste it in, please email me for further options.
+
+(3) START SMALL AND START EARLY. Create a single room. Then write some if else statements to get to another room (this is assuming you are creating a text based adventure). Then continue adding bits and pieces. Get it working as a game before adding complexity then add complexity.
+
+
+
+
+Ideas:
+
+Text-based Adventure Game:
+
+One idea is for you to create a text-based adventure game. If you want an example of what one of these is like, check out this link for some examples: https://www.gameskinny.com/ld1qr/the-5-best-text-based-games-you-can-play-on-your-browser-right-now
+
+In a text-based adventure game, you will explain the "room" a person is in or what they are seeing. Then the person will enter a command and something will happen. You will need to have at least these commands:
+
+north: character in game goes north
+
+south: character in game goes south
+
+west: character in game goes west
+
+east: character in game goes east
+
+inventory: display characters inventory
+
+use (item in inventory): this command lets a character use an item in their inventory. This item will do something to the stats of your character (see below). After the character enters use, they can then enter the item with it or enter it in a new prompt.
+
+attack: character attacks whatever is in the room
+
+solve: this will allow character to enter input that will attempt to solve a puzzle displayed upon entering a room.
+
+stats: display a characters stats (see below)
+
+(any other commands you add will on enrich the game! Be creative!)
+
+
+
+
+Stats:
+
+A character in game will have stats which will be numeric values that represent the state of a character. Here are the required ones:
+
+HP: (a numeric value that indicates the health of the character. This will be added to or depleting with things happening in the game. You lose the game by this going to 0)
+
+STR: (a characters strength ranging from 1-10. You can USE this score to do checks against obstacles and puzzles in the game)
+
+AGL: (a characters agility ranging from 1-10. You can USE this score to do checks against obstacles and puzzles in the game)
+
+(you are encouraged to add additional stats that can be used to overcome obstacles and puzzles in the game. I would shy away from stats like Intelligence because that will be measured by the person playing the game but you are free to include it if you want)
+
+
+
+Inventory:
+
+A character will have an inventory of item which will be stored in a data structure of your choice. Recall the requirements above and choose accordingly. This inventory can be added to and deleted from.
+
+
+Lets examine the requirement above in relation to this game:
+
+
+
+Text-based Adventure Game Term Project Requirements:
+
+(1) Number Conversion: this could be done in the form of a puzzle. A character enters a room and they are prompted to solve a puzzle that is a binary/octal/hex/decimal and do a conversion on it. If they player fails, they get HP reduced or die and lose. This isnt the only way to do number conversion in the game so you can be creative.
+
+(2) Prime Numbers or Cipher: prime numbers could be used to create a puzzle like above or you could use a cipher for a puzzle or even use a cipher to have the player log in when they first open the program. Other ways of using these are possible too.
+
+(3) Set Theory: You could use sets as a data structure to store inventory or some other information such as the characters stats. Be sure that you can do union, intersection and set difference on them.
+
+(4) Permutations/Combinations: This could also be a puzzle as you ask the player to enter the number of permutations of something or have a combination lock puzzle. Other ways of using it are possible too.
+
+(5) Probability: There are lots of ways to include probability. My instinct would be to create a way to use probability to tell if a player hits an opponent in combat using random percentages but you could also use it to do checks where a player is trying to open a stuck door (use STR stat to reduce or increase probability) or jump over a chasm (use DEX stat to reduce or increase probability). There are many other ways to use probability.
+
+(6) Algorithms: You will just need to be sure to meet the requirements of using a sorting algorithm and/or greedy algorithm here. One option is the knapsack problem for your inventory. But its not the only option. Be creative.
+
+(7) Recursion: Again just be sure to use recursion a few times in some functions in your program
+
+(8) Trees: A BST can be used to store data about your inventory or your characters stats or even a collection of the items or rooms in the dungeon or whatever space your character goes through. There are many other options you could do with a BST. Be sure it is searchable, you can add and delete from it.
+
+(9) Finite State Machines & Graphs: The finite state machine is a PERFECT way to build your map for your adventure as well as the actions that a player can take. If you wanted to make a graph for extra credit as a data structure you could. You could also use a FSM to generalize the action a character could take in each “room”.
+
+(10) Stats Scores: You could have a door blocked by rocks and have the player roll two 6-sided dice to see if they can move the blocks. Then add their STR score to their roll if they get a 10 or above, they are successful. Or have a pit where they have to jump over it and they roll two 6-sided dice to see if they can make the jump. Then add their DEX score to their roll and if they get a 12 or above, they are successful. If they don't, they can fall into the pit and lose 5 of their HP but can continue.
+
+(11) Battles/Puzzles: You will need to have a combination of 3 battles or puzzles. I would suggest accomplishing some of your requirements for binary conversion, cipher, etc with puzzles. Battles can just be a turn-based back and forth system with a random number representing a dice indicating if a player was successful in attack and how much hp damage they did to the enemy. Keep track of the enemy's hp and when it gets to < 0 then they die and player wins. If the players hp gets to 0 or lower, they die and have to restart.
+
+(12) General: Create 6 rooms that can be navigated through a text-based adventure.
+
+
+
+
+
+Online store
+
+Another idea would be create some sort of online store if you didn’t want to do the text-based adventure. I will list out idea for the requirements for this too below:
+
+
+
+You will need to have data structures to hold inventory, etc. You will also need to have a funds variable or structure to keep track of how much money that you have (money goes out with giving change, money comes in with purchases, money goes out with you making vendor orders, etc)
+
+Online Store Term Project Requirements:
+
+(1) Number Conversion: This one is a bit tricky. I encourage your to be creative. Perhaps you could have it so that a foreign currency option a person could pay with would be in hex numbers and you’d have to convert it to add it to your funds.
+
+(2) Prime Numbers or Cipher: I would suggest adding a cipher at the beginning in that if a person wanted to sign in as an admin, they would need a password. That password would be encrypted and then decrypted.
+
+(3) Set Theory: You could use sets as a data structure to store inventory. Be sure to be able to do unions, intersections and set difference.
+
+(4) Permutations/Combinations: Use permutations or combinations to produce possible bundles that are on sale?  Not sure. I would encourage you to be creative here to find a way to use them.
+
+(5) Probability: This one is tricky too. I couldn’t think of anything other than offering a customer an ability to participate in a contest that, if they won, would give them a discount. You will run a random number against a level of probability and then it would tell the customer if they won. If they did, they would get 15% off or something.
+
+(6) Algorithms: You will just need to be sure to meet the requirements of using a sorting algorithm and/or greedy algorithm here. One option is the knapsack problem for your inventory. But its not the only option. Be creative.
+
+(7) Recursion: Again just be sure to use recursion a few times in some functions in your program
+
+(8) Trees: A BST can be used to store data about your inventory or something else. There are many other options you could do with a BST. Be sure it is searchable, you can add and delete from it.
+
+(9) Finite State Machines & Graphs: In this instance, you could create a FSM that would show the different states a customer could be in while in your store and the transistions would be the interactions with the store that took them to other screens. You could also use a FSM to show how a transaction would work. You could use a graph to store data for extra credit.
+
+(10) Stats Scores / Inventory: For stat scores for an online store, I want you to have an option to log in as a customer with a set amount of currency. The customer can spend their money, which deducts from their currency and puts what they bought into an inventory. Use a shopping cart to simulate collection of items to be purchased and then check out. Update the inventory of the store as well.
+
+(11) Shopping/Interactions: You will need to have a combination of 3 interactions for the customer or admin login. Admin login could be running reports, purchasing from a vendor to add to inventory. Interactions for customer will be to shop.
+
+(12) General: Create at least 6 menus to navigate through for the store.
+
+
+
+These aren’t the only two ideas you could do but if you choose something else, I expect you to email me BEFORE week 5 with your idea and some examples of how you will fulfill the requirements.
+
+
+
+The final submission
+
+The final submission will be the project on repl.it for the actual code. It can consist of multiple files for different parts of the program (file for inventory, file for main menu, just some examples – you can figure this part out). Those files will be linked with import statements in Python. Or if you want, it can be one large file but keep it neat! You will also submit you Finite State Machine separately on Canvas as well as downloading your Python files from Repl.it and submitting them zipped up on Canvas (for a back up just in case). Finally, you will submit a word document that explains how to use your program and how you met the requirements. Use the list above as a template.
+
+IF YOUR PROGRAM DOES NOT RUN FOR ME WHEN I CLICK RUN, YOU WILL GET A ZERO. Make sure your program RUNS before submission of your program!!!!  I can’t emphasize this enough.
+
+Final Submission checklist:
+
+Repl project code submission through webpage
+
+Finite State machine drawing either as a jpg or PDF from LucidChart or Visio or something else
+
+Instructions and Requirements Summary in a Word document
+
+Zipped up Python files downloaded from repl.it
+
+
+
+The smart student would copy their Python code from repl.it into their local machine to keep as BACK UP just in case. You will not get extensions or provisions if somehow repl.it loses your code.
+
+Rubric for Grade:
+
+Requirement      Percentage of Grade
+
+Minimum of 6 rooms/menus 15%
+
+Minimum of 3 Battles/Puzzles or Purchases/Interactions 10%
+
+Stats/Customer Currency and Inventory 5%
+
+Number Conversion portion 5%
+
+Prime Numbers/Cipher portion 10%
+
+Sets usage 10%
+
+Permutations/Combinations usage 10%
+
+Probability usage 10%
+
+Recursion usage 10%
+
+Binary Search Trees usage 10%
+
+Creation of Finite State Machine 10%
+
+Total 100%
+
+
+
+
+

@@ -1,4 +1,4 @@
-def BinToDec(bnum):
+def bin_to_dec(bnum):
     new_num = []
 
     for j in range(len(bnum)):
@@ -9,11 +9,11 @@ def BinToDec(bnum):
     return total
 
 
-def DecToBin(dnum):
+def dec_to_bin(dnum):
     new_num = []
 
     if dnum > 1:
-        num = DecToBin(dnum // 2)
+        num = dec_to_bin(dnum // 2)
         num = num % 2
         new_num.append(num)
 
