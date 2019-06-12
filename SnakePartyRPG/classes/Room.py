@@ -19,6 +19,7 @@ class Room:
         self.coin_list = None
         self.background = None
         self.problem = None
+        self.score = None
         self.is_answered = False
         self.key = arcade.Sprite("images/16x16/Item__69.png", WALL_SPRITE_SCALING)
         self.key.center_x = random.randrange(SCREEN_WIDTH)

@@ -16,6 +16,11 @@ from classes.Turning import *
 from classes.Teammate import *
 from classes.Imp import *
 from classes.Javelin import *
+import itertools
+from itertools import product
+from itertools import permutations
+from itertools import combinations
+import string
 
 
 class MyGame(arcade.Window):
@@ -34,6 +39,7 @@ class MyGame(arcade.Window):
         self.rooms = None
         self.player_sprite = None
         self.player_list = None
+        self.party_list = None
         self.item_list = None
         self.enemy_list = None
         self.javelin_list = None
@@ -61,6 +67,7 @@ class MyGame(arcade.Window):
         self.item_list = arcade.SpriteList()
         self.enemy_list = arcade.SpriteList()
         self.javelin_list = arcade.SpriteList()
+        self.party_list = set()
 
         # Score
         self.score = 0
@@ -117,30 +124,56 @@ class MyGame(arcade.Window):
         if self.current_room == 0:
             self.draw_instructions_page()
         else:
-            self.player_list.draw()
+            self.player_sprite.draw()
+            # self.player_list.draw()
             self.rooms[self.current_room].wall_list.draw()
+
             if self.current_room == 1:
-                self.rooms[self.current_room].item_list.draw()
+                # Set up the items
+                for i in range(2):
+                    # Create the item instance
+                    item = arcade.Sprite("images/16x16/Item__67.png", SPRITE_SCALING * 3)
+
+                    # Position the item
+                    item.center_x = random.randrange(SCREEN_WIDTH)
+                    item.center_y = random.randrange(SCREEN_HEIGHT)
+
+                    # Add the item to the lists
+                    self.item_list.append(item)
+                self.item_list.draw()
+
             if self.current_room == 2:
-                self.rooms[self.current_room].enemy_list.draw()
+                # set up the enemy imp forces
+                for i in range(1):
+                    # Create the item instance
+                    enemy = Imp("images/imp.png", SPRITE_SCALING)
+
+                    # Position the item
+                    enemy.center_x = random.randrange(SCREEN_WIDTH)
+                    enemy.center_y = random.randrange(SCREEN_HEIGHT)
+
+                    # Add the enemy to the lists
+                    self.enemy_list.append(enemy)
+                self.enemy_list.draw()
                 # self.rooms[self.current_room].javelin_list.draw()
+
             if self.current_room == 5:
                 # Put the text on the screen.
                 output = "You made it!"
                 arcade.draw_text(output, SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2, arcade.color.JUNE_BUD, 24)
 
-            # Draw inventory to screen...
-            arcade.draw_lrtb_rectangle_filled(350,
-                                              350 + SCREEN_WIDTH - 1,
-                                              700 + TEAM_SPRITE_SIZE * 2,
-                                              700, arcade.color.BLACK)
-            x_position = 350
+            # # Draw inventory to screen...
+            # arcade.draw_lrtb_rectangle_filled(350,
+            #                                   350 + SCREEN_WIDTH - 1,
+            #                                   700 + TEAM_SPRITE_SIZE * 2,
+            #                                   700, arcade.color.BLACK)
+            # x_position = 350
 
-            for item in self.item_list:
-                item.bottom = self.view_bottom
-                item.left = x_position
-                x_position += item.width
-                item.draw()
+            # for item in self.item_list:
+            #     item.bottom = -SCREEN_HEIGHT + 50
+            #     item.left = x_position
+            #     x_position += item.width
+            #     item.draw()
 
             # Put the text on the screen.
             output = f"Score: {self.score}"
@@ -198,10 +231,10 @@ class MyGame(arcade.Window):
         arcade.draw_text("Party pals will give a bonus; but use them wisely or you'll have 1 in P chance to lose them!",
                          center_x - 50, center_y - 35, arcade.color.ANTI_FLASH_WHITE, 14, width=width, align="center",
                          anchor_x="center", anchor_y="center")
-        arcade.draw_text("[WASD] to move, [SPACEBAR] to start",
+        arcade.draw_text("[WASD] to move, [SPACEBAR] to start, gather pies and don't dies!",
                          center_x, center_y - 85, arcade.color.ANTI_FLASH_WHITE, 14, width=width, align="center",
                          anchor_x="center", anchor_y="center")
-        arcade.draw_text("Get the items and don't die!",
+        arcade.draw_text("Must have score over [00101] to succeed in this party.",
                          center_x, center_y - 125, arcade.color.ANTI_FLASH_WHITE, 14, width=width, align="center",
                          anchor_x="center", anchor_y="center")
 
@@ -217,20 +250,35 @@ class MyGame(arcade.Window):
     def update(self, delta_time):
         """ Movement and game logic """
 
-        # Call update on all sprites (The sprites don't do much in this
-        # example though.)
+        # Call update on all sprites
         self.physics_engine.update()
 
-        if len(self.item_list) > 0:
+        if self.current_room == 1:
+            # collect pies
             self.item_list.update()
-
-            # Generate a list of all sprites that collided with the player.
+            # Generate a list of all pie sprites that collided with the player.
             items_hit_list = arcade.check_for_collision_with_list(self.player_sprite, self.item_list)
-
             # Loop through each colliding sprite, remove it, and add to the score.
             for item in items_hit_list:
                 item.kill()
                 self.score += 1
+
+        if self.current_room == 2:
+            # avoid imps or lose pie points
+            self.enemy_list.update()
+            # Generate a list of all imp sprites that collided with the player.
+            enemies_hit_list = arcade.check_for_collision_with_list(self.player_sprite, self.enemy_list)
+            # Loop through each colliding sprite, remove it, and deduct from the score.
+            for imp in enemies_hit_list:
+                imp.kill()
+                self.score -= 1
+
+        # got pie, get friends!
+        if self.current_room == 3 and self.score >= 5:
+            mate = Teammate(self.score)
+            mate.follow_sprite(self.player_sprite)
+            self.player_list.append(mate)
+            mate.mate_sprite.draw()
 
         # Do some logic here to figure out what room we are in, and if we need to go
         # to a different room.
@@ -255,12 +303,15 @@ class MyGame(arcade.Window):
             self.physics_engine = arcade.PhysicsEngineSimple(self.player_sprite,
                                                              self.rooms[self.current_room].wall_list)
             self.player_sprite.center_x = SCREEN_WIDTH
-
-            # got pie, get friends!
-            if len(self.item_list) > 5:
-                mate = Teammate(self.item_list)
-                mate.follow_sprite(self.player_sprite)
-                self.player_list.append(mate)
+            # party_power = 0
+            # team = list()
+            # for mate in self.party_list.get_pre_order:
+            #     party_power += Teammate.strength
+            #     team.append(mate)
+            # if party_power >= 25:
+            #     for mate in list(combinations(team, 3)):
+            #         if Teammate.name is "Pipo":
+            #             Teammate.pipo_help(self.enemy_list)
 
         elif self.player_sprite.center_x < 0 and self.current_room == 3:
             # reflecting room conversion
@@ -268,24 +319,24 @@ class MyGame(arcade.Window):
             self.physics_engine = arcade.PhysicsEngineSimple(self.player_sprite,
                                                              self.rooms[self.current_room].wall_list)
             self.player_sprite.center_x = 0
-
-        elif self.player_sprite.center_x > SCREEN_WIDTH and self.current_room == 4:
-            # volcanoes chance
-            self.current_room = 5
-            self.physics_engine = arcade.PhysicsEngineSimple(self.player_sprite,
-                                                             self.rooms[self.current_room].wall_list)
-            self.player_sprite.center_x = 150
-
-            # friends fall to their lava deaths every so often here
+            # friends fall to their lava deaths every so often [1:P chance]
             if self.mates > 0:
                 start_time = time.time()
                 while True:
                     self.game_of_chance()
                     time.sleep(60.0 - ((time.time() - start_time) % 60.0))
 
+        elif self.player_sprite.center_x > SCREEN_WIDTH and self.current_room == 4\
+                and self.score > 101:
+            # volcanoes chance
+            self.current_room = 5
+            self.physics_engine = arcade.PhysicsEngineSimple(self.player_sprite,
+                                                             self.rooms[self.current_room].wall_list)
+            self.player_sprite.center_x = 150
+
         elif self.current_room == 5:
             # treasury
 
             self.physics_engine = arcade.PhysicsEngineSimple(self.player_sprite,
                                                              self.rooms[self.current_room].wall_list)
-            self.player_sprite.center_x = 350
+            self.player_sprite.center_x = 150

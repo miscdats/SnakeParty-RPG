@@ -50,6 +50,18 @@ def battle_room():
     wall.left = 3 * SPRITE_SIZE
     wall.bottom = 2 * SPRITE_SIZE
     room.wall_list.append(wall)
+    wall = arcade.Sprite("images/nature_tileset_without_gaps/_rocky/rocky03.png", SPRITE_SCALING)
+    wall.left = 9 * SPRITE_SIZE
+    wall.bottom = 9 * SPRITE_SIZE
+    room.wall_list.append(wall)
+    wall = arcade.Sprite("images/nature_tileset_without_gaps/_rocky/rocky03.png", SPRITE_SCALING)
+    wall.left = 5 * SPRITE_SIZE
+    wall.bottom = 4 * SPRITE_SIZE
+    room.wall_list.append(wall)
+    wall = arcade.Sprite("images/nature_tileset_without_gaps/_rocky/rocky03.png", SPRITE_SCALING)
+    wall.left = 6 * SPRITE_SIZE
+    wall.bottom = 6 * SPRITE_SIZE
+    room.wall_list.append(wall)
 
     room.problem = "Attack with [spacebar]!"
 

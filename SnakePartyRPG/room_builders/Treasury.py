@@ -1,4 +1,4 @@
-# Room full of COINS!
+# Room full of it!
 # get rich quick schemes
 
 from classes.Room import *
@@ -21,7 +21,7 @@ def treasury():
     # Set up the items
     for i in range(10):
         # Create the item instance
-        item = arcade.Sprite("images/16x16/Item__67.png", SPRITE_SCALING * 3)
+        item = arcade.Sprite("images/16x16/Item__67.png", SPRITE_SCALING)
 
         # Position the item
         item.center_x = random.randrange(SCREEN_WIDTH - 150)
@@ -54,10 +54,26 @@ def treasury():
                 wall.tag = "trophy"
                 room.wall_list.append(wall)
 
-    wall = arcade.Sprite("images/16x16/Item__71.png", SPRITE_SCALING*20)
-    wall.left = 2 * SPRITE_SIZE
-    wall.bottom = 3 * SPRITE_SIZE
-    room.wall_list.append(wall)
+    spirals = []
+    spirals = fibonacci(500)
+
+    for i in spirals:
+        for j in spirals:
+            wall = arcade.Sprite("images/16x16/Item__71.png", SPRITE_SCALING*3)
+            wall.left = j * SPRITE_SCALING + 300
+            wall.bottom = i * SPRITE_SCALING + 200
+            room.wall_list.append(wall)
+
     room.background = arcade.load_texture("images/bgs/PNG/Full/City/classic_city.png")
 
     return room
+
+
+def fibonacci(n):
+    """ Returns array of numbers in Fibonacci sequence up to n. """
+    result = []
+    a, b = 0, 1
+    while a < n:
+        result.append(a)
+        a, b = b, a+b
+    return result

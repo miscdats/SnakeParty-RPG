@@ -19,18 +19,18 @@ def cliffs_area():
     room.wall_list = arcade.SpriteList()
     room.item_list = arcade.SpriteList()
 
-    # collect pies
-    # Set up the items
-    for i in range(10):
-        # Create the item instance
-        item = arcade.Sprite("images/16x16/Item__67.png", SPRITE_SCALING * 3)
-
-        # Position the item
-        item.center_x = random.randrange(SCREEN_WIDTH - 150)
-        item.center_y = random.randrange(SCREEN_HEIGHT - 150)
-
-        # Add the item to the lists
-        room.item_list.append(item)
+    # # collect pies
+    # # Set up the items
+    # for i in range(10):
+    #     # Create the item instance
+    #     item = arcade.Sprite("images/16x16/Item__67.png", SPRITE_SCALING * 3)
+    #
+    #     # Position the item
+    #     item.center_x = random.randrange(SCREEN_WIDTH - 150)
+    #     item.center_y = random.randrange(SCREEN_HEIGHT - 150)
+    #
+    #     # Add the item to the lists
+    #     room.item_list.append(item)
 
     # -- Set up the walls
     # Create bottom and top row of boxes
@@ -67,7 +67,6 @@ def cliffs_area():
         room.key.center_x = random.randrange(SCREEN_WIDTH)
         room.key.center_y = random.randrange(SCREEN_HEIGHT)
         room.key.draw()
-    # If you want coins or monsters in a level, then add that code here.
 
     # Load the background image for this level.
     room.background = arcade.load_texture("images/bgs/PNG/Full/Horror/horror2_nomoon.png")

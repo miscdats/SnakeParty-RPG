@@ -28,7 +28,7 @@ def reflecting_pools():
             wall.left = x
             wall.bottom = y
             wall.tag = "mirror"
-            wall.code = dec_to_bin(x)
+            wall.code = 0
             room.wall_list.append(wall)
 
     # Create left and right column of mirrors
@@ -41,7 +41,7 @@ def reflecting_pools():
                 wall.left = x
                 wall.bottom = y
                 wall.tag = "mirror"
-                wall.code = dec_to_bin(x)
+                wall.code = 0
                 room.wall_list.append(wall)
 
     wall = arcade.Sprite("images/nature_tileset_without_gaps/_water/water_full_1.png", SPRITE_SCALING)

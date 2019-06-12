@@ -9,23 +9,23 @@ class Teammate(arcade.Sprite):
     strength = 0
     name = None
     dialog = None
-    mate_sprite = arcade.Sprite("images/pink_snake_tongue_pixel.png", WALL_SPRITE_SCALING)
-    mate_sprite.center_x = random.randrange(SCREEN_WIDTH)
-    mate_sprite.center_y = random.randrange(SCREEN_HEIGHT)
+    mate_sprite = None
 
-    def __init__(self, item_list):
+    def __init__(self, score):
         # Call the parent Sprite constructor
         super().__init__()
-        if 25 > len(item_list) >= 5:
+        if 50 > score >= 5:
             self.name = "wracker"
             self.strength = 5
-        elif 50 > len(item_list) >= 25:
+        elif 500 > score >= 25:
             self.name = "pipo"
             self.strength = 25
-        elif len(item_list) >= 50:
+        elif score >= 500:
             self.name = "strompy"
             self.strength = 50
-        self.mate_sprite.draw()
+        self.mate_sprite = arcade.Sprite("images/pink_snake_tongue_pixel.png", WALL_SPRITE_SCALING)
+        self.mate_sprite.center_x = random.randrange(SCREEN_WIDTH)
+        self.mate_sprite.center_y = random.randrange(SCREEN_HEIGHT)
 
     def strompy_help(self, javelin_list):
         self.bonus = "destroy enemy weapons"
@@ -39,9 +39,9 @@ class Teammate(arcade.Sprite):
         self.bonus = "destroy enemies"
         self.strength = 25
         self.dialog = "Pipo's here to help!"
-
-        for enemy in enemy_list:
-            enemy.kill()
+        enemy_list.kill()
+        # for enemy in enemy_list:
+        #     enemy.kill()
 
     def wracker_help(self, mirror_list):
         self.bonus = "destroy mirrors"
@@ -60,7 +60,7 @@ class Teammate(arcade.Sprite):
         an exact multiple of SPRITE_SPEED.
         """
 
-        self.center_x += self.change_x
+        self.center_x += self.change_x - 150
         self.center_y += self.change_y
 
         # Random 1 in 100 chance that we'll change from our old direction and

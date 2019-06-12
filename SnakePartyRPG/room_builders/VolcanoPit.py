@@ -43,8 +43,6 @@ def volcano_pit():
     wall.bottom = 10 * SPRITE_SIZE
     room.wall_list.append(wall)
 
-    # If you want coins or monsters in a level, then add that code here.
-
     # Load the background image for this level.
     room.background = arcade.load_texture("images/bgs/PNG/Full/Miscellaneous/volcanoes.png")
 
